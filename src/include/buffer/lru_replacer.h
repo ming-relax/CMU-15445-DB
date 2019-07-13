@@ -9,6 +9,9 @@
 
 #pragma once
 
+#include <deque>
+#include <unordered_map>
+
 #include "buffer/replacer.h"
 #include "hash/extendible_hash.h"
 
@@ -28,9 +31,11 @@ public:
   bool Erase(const T &value);
 
   size_t Size();
-
+//  typedef std::dequeue<T>::iterator iterator_type;
 private:
   // add your member variables here
+  std::unordered_map<T, typename std::deque<T>::iterator> map_;
+  std::deque<T> queue_;
 };
 
 } // namespace cmudb
