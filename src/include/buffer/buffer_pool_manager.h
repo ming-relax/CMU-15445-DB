@@ -35,6 +35,8 @@ public:
   bool DeletePage(page_id_t page_id);
 
 private:
+  Page *getFreePage();
+  void initAndPinPage(Page *page, page_id_t new_page_id);
   size_t pool_size_; // number of pages in buffer pool
   Page *pages_;      // array of pages
   DiskManager *disk_manager_;

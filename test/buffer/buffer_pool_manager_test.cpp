@@ -32,14 +32,21 @@ TEST(BufferPoolManagerTest, SampleTest) {
   for (int i = 10; i < 15; ++i) {
     EXPECT_EQ(nullptr, bpm.NewPage(temp_page_id));
   }
-  // upin the first five pages, add them to LRU list, set as dirty
+
+  // unpin the first five pages, add them to LRU list, set as dirty
   for (int i = 0; i < 5; ++i) {
     EXPECT_EQ(true, bpm.UnpinPage(i, true));
   }
+
+
+  // check the page content
+  page_zero = bpm.FetchPage(0);
+  EXPECT_EQ(0, strcmp(page_zero->GetData(), "Hello"));
+
   // we have 5 empty slots in LRU list, evict page zero out of buffer pool
   for (int i = 10; i < 14; ++i) {
     EXPECT_NE(nullptr, bpm.NewPage(temp_page_id));
-  }
+}
   // fetch page one again
   page_zero = bpm.FetchPage(0);
   // check read content
