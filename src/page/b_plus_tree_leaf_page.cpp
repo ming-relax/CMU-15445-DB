@@ -20,7 +20,14 @@ namespace cmudb {
  * next page id and set max size
  */
 INDEX_TEMPLATE_ARGUMENTS
-void B_PLUS_TREE_LEAF_PAGE_TYPE::Init(page_id_t page_id, page_id_t parent_id) {}
+void B_PLUS_TREE_LEAF_PAGE_TYPE::Init(page_id_t page_id, page_id_t parent_id) {
+  SetPageType(IndexPageType::LEAF_PAGE);
+  SetPageId(page_id);
+  SetParentPageId(parent_id);
+  int max_size = (PAGE_SIZE - sizeof(BPlusTreePage)) / sizeof(MappingType);
+  SetMaxSize(max_size);
+  SetSize(0);
+}
 
 /**
  * Helper methods to set/get next page id
